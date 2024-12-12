@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $email = $_POST["email"];
 
-    $to = "info@happy2change.be"; // vervang dit door je eigen e-mail
+    $to = "fabianhorn2010@gmail.com"; // vervang dit door je eigen e-mail
     $subject = "Nieuwe pre-order van $name";
     $message = "$name heeft een pre-order geplaatst. Hun e-mail is $email.";
     $headers = "From: info@happy2change.be"; // vervang dit door je eigen domein
