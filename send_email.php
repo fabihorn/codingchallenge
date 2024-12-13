@@ -1,21 +1,29 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    error_log("In send_email.php");
-    $name = $_POST["name"];
-    $email = $_POST["email"];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Formulardaten auslesen
+    $name = htmlspecialchars($_POST['name']);
+    $email = htmlspecialchars($_POST['email']);
+    $message = htmlspecialchars($_POST['message']);
 
-    $to = "fabianhorn2010@gmail.com"; // vervang dit door je eigen e-mail
-    $subject = "Nieuwe pre-order van $name";
-    $message = "$name heeft een pre-order geplaatst. Hun e-mail is $email.";
-    $headers = "From: fabianhorn2010@gmail.com"; // vervang dit door je eigen domein
+    // E-Mail-Adresse des Empfängers
+    $to = "fabianhorn2010@gmail.com"; // Ersetze dies durch deine E-Mail-Adresse
+    $subject = "Neue Nachricht von $name über das Kontaktformular";
 
-    // Verstuur de e-mail
-    if(mail($to, $subject, $message, $headers)) {
-        error_log("E-mail versendet");
-        echo json_encode(["success" => true]);
+    // Nachricht formatieren
+    $emailMessage = "Name: $name\n";
+    $emailMessage .= "E-Mail: $email\n";
+    $emailMessage .= "Nachricht:\n$message\n";
+
+    // Header für die E-Mail
+    $headers = "From: $email\r\n";
+    $headers .= "Reply-To: $email\r\n";
+
+    // E-Mail senden
+    if (mail($to, $subject, $emailMessage, $headers)) {
+        echo "Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.";
     } else {
-        error_log("E-mail nicht versendet");
-        echo json_encode(["success" => false]);
+        echo "Es gab ein Problem beim Senden der Nachricht. Bitte versuchen Sie es später erneut.";
     }
+} else {
+    echo "Ungültige Anfrage.";
 }
-?>
