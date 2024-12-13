@@ -7,14 +7,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $to = "fabianhorn2010@gmail.com"; // vervang dit door je eigen e-mail
     $subject = "Nieuwe pre-order van $name";
     $message = "$name heeft een pre-order geplaatst. Hun e-mail is $email.";
-    $headers = "From: info@happy2change.be"; // vervang dit door je eigen domein
+    $headers = "From: fabianhorn2010@gmail.com"; // vervang dit door je eigen domein
 
     // Verstuur de e-mail
     if(mail($to, $subject, $message, $headers)) {
-        error_log("E-mail verzonden");
+        error_log("E-mail versendet");
         echo json_encode(["success" => true]);
     } else {
-        error_log("E-mail niet verzonden");
+        error_log("E-mail nicht versendet");
         echo json_encode(["success" => false]);
     }
 }
