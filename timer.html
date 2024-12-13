@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer Einstellen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .timer-container {
+            margin-top: 20px;
+        }
+        #timeDisplay {
+            font-size: 2em;
+            margin: 20px;
+        }
+        button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stelle deinen Timer ein</h1>
+
+    <label for="minutes">Minuten: </label>
+    <input type="number" id="minutes" value="0" min="0" max="60">
+    <label for="seconds">Sekunden: </label>
+    <input type="number" id="seconds" value="0" min="0" max="59">
+    
+    <button onclick="startTimer()">Starten</button>
+    <button onclick="pauseTimer()">Pause</button>
+    <button onclick="resetTimer()">Zurücksetzen</button>
+    
+    <div class="timer-container">
+        <p id="timeDisplay">00:00</p> <!-- Timer Anzeige -->
+    </div>
+
+    <script>
+        let timer;
+        let timeLeft; // Zeit in Sekunden
+        let isRunning = false;
+        let isPaused = false;
+
+        // Funktion, um den Timer zu starten
+        function startTimer() {
+            // Wenn der Timer bereits läuft, tue nichts
+            if (isRunning && !isPaused) {
+                return;
+            }
+
+            // Wenn der Timer pausiert wurde, fahre mit der restlichen Zeit fort
+            if (isPaused) {
+                isPaused = false;
+                return;
+            }
+
+            // Eingabewerte holen
+            const minutes = parseInt(document.getElementById("minutes").value);
+            const seconds = parseInt(document.getElementById("seconds").value);
+            
+            // Zeit in Sekunden umrechnen
+            timeLeft = (minutes * 60) + seconds;
+            isRunning = true;
+
+            // Timer starten
+            timer = setInterval(function() {
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert("Zeit abgelaufen!");
+                    isRunning = false;
+                    document.getElementById('timeDisplay').textContent = "00:00";
+                } else {
+                    timeLeft--;
+                    const mins = Math.floor(timeLeft / 60);
+                    const secs = timeLeft % 60;
+                    document.getElementById('timeDisplay').textContent = `${padZero(mins)}:${padZero(secs)}`;
+                }
+            }, 1000); // Timer jede Sekunde aktualisieren
+        }
+
+        // Funktion, um den Timer zu pausieren
+        function pauseTimer() {
+            if (isRunning) {
+                clearInterval(timer);
+                isRunning = false;
+                isPaused = true;
+            }
+        }
+
+        // Funktion, um den Timer zurückzusetzen
+        function resetTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            isPaused = false;
+            timeLeft = 0;
+            document.getElementById('timeDisplay').textContent = "00:00";
+        }
+
+        // Funktion, um eine Zahl auf 2 Stellen zu formatieren (z. B. 3 -> 03)
+        function padZero(num) {
+            return num < 10 ? '0' + num : num;
+        }
+    </script>
+</body>
+</html>
