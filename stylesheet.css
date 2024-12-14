@@ -2,8 +2,8 @@ body{
     font-family: "Lora", serif;
     font-optical-sizing: auto;
     font-style: normal;
-    color: #fff;
-    background-color: black;
+    color:black;
+    background-color: #d4fffc;
 }
 
 .snowflake {
