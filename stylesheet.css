@@ -1,8 +1,9 @@
 .body{
-    background-color:#badbe3;
     font-family: "Lora", serif;
     font-optical-sizing: auto;
     font-style: normal;
+    color: #fff;
+    background-color: #000;
 }
 /* customizable snowflake styling */
 .snowflake {
