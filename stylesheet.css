@@ -7,8 +7,7 @@ body{
 }
 
 a{
-    text-decoration: overline;
-    text-decoration: underline;
+    text-decoration:none;
     color:#010017;
 }
 
